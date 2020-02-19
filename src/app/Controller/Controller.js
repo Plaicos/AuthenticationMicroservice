@@ -29,6 +29,7 @@ module.exports = class Controller {
     generateToken() {
         var self = this
         return async function (call, callback) {
+            console.log("CALLED BRO")
             let user = call.request.user
             let { UC } = self
 
