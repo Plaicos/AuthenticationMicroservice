@@ -13,7 +13,6 @@ module.exports = class Controller {
             let credential = call.request
 
             try {
-                console.log(credential)
                 await UC.System.create_credential(credential)
                 let statusResponse = {
                     status: "ok"
@@ -29,7 +28,6 @@ module.exports = class Controller {
     generateToken() {
         var self = this
         return async function (call, callback) {
-            console.log("CALLED BRO")
             let user = call.request.user
             let { UC } = self
 
@@ -55,7 +53,6 @@ module.exports = class Controller {
 
             try {
                 let credential = await UC.System.authenticateToken(token)
-                console.log({ credential })
                 callback(null, credential.credential)
             }
             catch (erro) {
@@ -85,8 +82,7 @@ module.exports = class Controller {
     }
 
     handle_error(callback, erro) {
-        //login error handling
-        console.log(erro)
-        callback(erro, null)
+        console.log({ erro })
+        callback(Error(erro), null)
     }
 }
