@@ -4,8 +4,8 @@ async function initialize() {
     var dependencies = await new Dependencies().build()
 
     //GRPC 
-    var { grpcInit } = require("./src/config/GRPC/GRPC")
-    grpcInit(dependencies)
+    var { initialize } = require("./src/config/GRPC/GRPC")
+    initialize(dependencies)
 }
 
 initialize()
