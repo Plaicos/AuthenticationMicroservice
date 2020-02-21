@@ -116,4 +116,55 @@ module.exports = class SystemUseCases {
             }
         });
     }
+
+    deleteCredential(user, credential) {
+        return new Promise(async (resolve, reject) => {
+            if (!user || typeof user !== "string") {
+                return reject("User must be a valid string")
+            }
+            if (!credential) {
+                console.log(Error("CREDENTIAL IS MISSINGF"))
+                return reject("INTERNAL SERVER ERROR, TRY LATER")
+            }
+
+            if (user === credential.user) {
+                var config = {
+                    level: 4,
+                    scope: {
+                        read: true,
+                        write: true,
+                        third_party: {
+                            read: false,
+                            write: false
+                        }
+                    }
+                }
+            }
+            else {
+                var config = {
+                    level: 3,
+                    scope: {
+                        read: false,
+                        write: false,
+                        third_party: {
+                            read: true,
+                            write: true
+                        }
+                    }
+                }
+            }
+
+            let { DAO } = this
+
+            try {
+                await this.checkCredentialClearance(config, credential)
+                let user_credential = await new this.entities.Credential({ credential: { user: user }, DAO }).load()
+                await user_credential.delete()
+                resolve()
+            }
+            catch (erro) {
+                reject(erro)
+            }
+        })
+    }
 }

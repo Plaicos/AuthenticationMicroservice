@@ -34,6 +34,29 @@ module.exports = class Credential {
         });
     }
 
+    load() {
+        return new Promise(async (resolve, reject) => {
+            let { DAO, credential } = this
+            let { user } = credential
+
+            try {
+                let credential = await DAO.System.get_credential(user)
+                credential = await this.methods(credential)
+                resolve(credential)
+            }
+            catch (erro) {
+                reject(erro)
+            }
+        })
+    }
+
+    methods(obj) {
+        return new Promise(async (resolve, reject) => {
+            obj.__proto__.delete = this.delete()
+            resolve(obj)
+        })
+    }
+
     validate(credential, isConfig) {
         return new Promise(async (resolve, reject) => {
             let { DAO } = this
@@ -52,4 +75,19 @@ module.exports = class Credential {
         });
     }
 
+    delete() {
+        let { DAO, credential } = this
+        let { user } = credential
+        return function (credential) {
+            return new Promise(async (resolve, reject) => {
+                try {
+                    await DAO.System.deleteCredential(user)
+                    resolve()
+                }
+                catch (erro) {
+                    reject(erro)
+                }
+            })
+        }
+    }
 }

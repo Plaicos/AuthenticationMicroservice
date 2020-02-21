@@ -38,6 +38,18 @@ module.exports = class SystemDAO {
         });
     }
 
+    deleteCredential(user) {
+        return new Promise(async (resolve, reject) => {
+            try {
+                await this.collections.credentials.remove({ user: user })
+                resolve()
+            }
+            catch (erro) {
+                reject(erro)
+            }
+        })
+    }
+
     check_user(user) {
         return new Promise((resolve, reject) => {
             this.collections.credentials.find({ user: user }).toArray((erro, result) => {

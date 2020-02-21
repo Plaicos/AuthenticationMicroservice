@@ -17,7 +17,8 @@ module.exports = class API {
             createCredential: Controller.create_credential(),
             generateToken: Controller.generateToken(),
             authenticate: Controller.authenticate(),
-            checkCredentialClearance: Controller.checkCredentialClearance()
+            checkCredentialClearance: Controller.checkCredentialClearance(),
+            deleteCredential: Controller.deleteCredential()
         }
         return Object.freeze(api)
     }

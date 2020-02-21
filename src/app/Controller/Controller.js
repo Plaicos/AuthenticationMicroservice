@@ -81,6 +81,25 @@ module.exports = class Controller {
         }
     }
 
+    deleteCredential() {
+        var self = this
+        return async function (call, callback) {
+            let { user, credential } = call.request
+            let { UC } = self
+
+            try {
+                await UC.System.deleteCredential(user, credential)
+                let statusResponse = {
+                    status: "ok"
+                }
+                callback(null, statusResponse)
+            }
+            catch (erro) {
+                self.handle_error(callback, erro)
+            }
+        }
+    }
+
     handle_error(callback, erro) {
         console.log({ erro })
         callback(Error(erro), null)
