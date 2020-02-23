@@ -9,7 +9,7 @@ module.exports = (user, DAO) => {
 
         try {
             if (!await DAO.System.check_user(user)) {
-                reject(`User '${user}' does not exist`)
+                return reject(`User '${user}' does not exist`)
             }
             resolve(user)
         }

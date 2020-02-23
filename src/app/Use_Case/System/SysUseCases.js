@@ -92,24 +92,30 @@ module.exports = class SystemUseCases {
                 let cots = config.scope.third_party
                 let crts = credential.scope.third_party
 
+                //user
+                if(config.user && (config.user !== credential.user)){
+                    return reject("Credential User Mismatch")
+                }
+
+                //level
                 if (config.level < credential.level) {
                     return reject("Unauthorized Request")
                 }
-                else if (config.scope.read && !credential.scope.read) {
+
+                //scope
+                if (config.scope.read && !credential.scope.read) {
                     return reject("Unauthorized Request")
                 }
-                else if (config.scope.write && !credential.scope.write) {
+                if (config.scope.write && !credential.scope.write) {
                     return reject("Unauthorized Request")
                 }
-                else if (cots.read && !crts.read) {
+                if (cots.read && !crts.read) {
                     return reject("Unauthorized Request")
                 }
-                else if (cots.write && !crts.write) {
+                if (cots.write && !crts.write) {
                     return reject("Unauthorized Request")
                 }
-                else {
-                    resolve()
-                }
+                resolve()
             }
             catch (erro) {
                 reject(erro)

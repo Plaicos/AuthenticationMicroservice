@@ -62,7 +62,10 @@ module.exports = class Credential {
             let { DAO } = this
 
             try {
-                if (!isConfig) {
+                if (isConfig && !credential.user) {
+
+                }
+                else {
                     await this.userValidator(credential.user, DAO)
                 }
                 new this.Scope(credential.scope).validate()
