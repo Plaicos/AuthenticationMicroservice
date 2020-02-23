@@ -107,16 +107,18 @@ module.exports = class SystemUseCases {
                     if (config.scope.write && !credential.scope.write) {
                         return reject("Unauthorized Request")
                     }
-                }
-                //third party scope
-                if (config.scope.third_party) {
-                    if (config.scope.third_party.read && !credential.scope.third_party.read) {
-                        return reject("Unauthorized Request")
+                    
+                    //third party scope
+                    if (config.scope.third_party) {
+                        if (config.scope.third_party.read && !credential.scope.third_party.read) {
+                            return reject("Unauthorized Request")
+                        }
+                        if (config.scope.third_party.write && !credential.scope.third_party.write) {
+                            return reject("Unauthorized Request")
+                        }
                     }
-                    if (config.scope.third_party.write && !credential.scope.third_party.write) {
-                        return reject("Unauthorized Request")
-                    }
                 }
+
 
                 resolve()
             }
