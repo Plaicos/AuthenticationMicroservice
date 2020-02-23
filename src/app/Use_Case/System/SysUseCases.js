@@ -88,12 +88,9 @@ module.exports = class SystemUseCases {
                 let Credential = new entities.Credential({ DAO })
                 await Credential.validate(config, true)
                 await Credential.validate(credential)
-                //
-                let cots = config.scope.third_party
-                let crts = credential.scope.third_party
 
                 //user
-                if(config.user && (config.user !== credential.user)){
+                if (config.user && (config.user !== credential.user)) {
                     return reject("Credential User Mismatch")
                 }
 
@@ -109,10 +106,10 @@ module.exports = class SystemUseCases {
                 if (config.scope.write && !credential.scope.write) {
                     return reject("Unauthorized Request")
                 }
-                if (cots.read && !crts.read) {
+                if (config.scope.third_party.read && !credential.scope.third_party.read) {
                     return reject("Unauthorized Request")
                 }
-                if (cots.write && !crts.write) {
+                if (config.scope.third_party.write && !credential.scope.third_party.write) {
                     return reject("Unauthorized Request")
                 }
                 resolve()
