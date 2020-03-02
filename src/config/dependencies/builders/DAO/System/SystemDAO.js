@@ -32,7 +32,7 @@ module.exports = class SystemDAO {
                     resolve(result[0])
                 }
                 else {
-                    resolve(false)
+                    reject("That user has no credential !")
                 }
             })
         });

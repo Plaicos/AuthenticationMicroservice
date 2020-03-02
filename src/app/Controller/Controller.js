@@ -47,11 +47,12 @@ module.exports = class Controller {
         var self = this
         return async function (call, callback) {
             let token = call.request.token
-            let { UC } = self
+            let { UseCases } = self
 
             try {
-                let credential = await UC.System.authenticateToken(token)
-                callback(null, credential.credential)
+                let credential = await UseCases.authenticateToken(token)
+                callback(null, credential)
+                console.log(credential)
             }
             catch (erro) {
                 self.handle_error(callback, erro)
@@ -64,10 +65,10 @@ module.exports = class Controller {
         return async function (call, callback) {
             let config = call.request.config
             let credential = call.request.credential
-            let { UC } = self
+            let { UseCases } = self
 
             try {
-                await UC.System.checkCredentialClearance(config, credential)
+                await UseCases.checkCredentialClearance(config, credential)
                 let statusResponse = {
                     status: "ok"
                 }
@@ -83,10 +84,10 @@ module.exports = class Controller {
         var self = this
         return async function (call, callback) {
             let { user, credential } = call.request
-            let { UC } = self
+            let { UseCases } = self
 
             try {
-                await UC.System.deleteCredential(user, credential)
+                await UseCases.deleteCredential(user, credential)
                 let statusResponse = {
                     status: "ok"
                 }
