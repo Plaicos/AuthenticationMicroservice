@@ -5,7 +5,7 @@ module.exports = class SystemUseCases {
         this.Presenter = Presenter
         this.Tools = Tools
         this.Factories = Factories
-        this.entities = require("../../Entity/entities")
+        this.entities = require("../Entity/entities")
     }
 
     create_credential(credential) {
@@ -50,7 +50,7 @@ module.exports = class SystemUseCases {
                     authenticated: true,
                     credential: credential
                 }
-                resolve(response)
+                resolve(credential)
             }
             catch (erro) {
                 reject(erro)

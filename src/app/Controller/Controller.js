@@ -1,19 +1,17 @@
 module.exports = class Controller {
     constructor(dependencies) {
         this.dependencies = dependencies
-        this.UC = {
-            System: new (require("../Use_Case/System/SysUseCases"))({ dependencies })
-        }
+        this.UseCases = new (require("../UseCases/UseCases"))({ dependencies })
     }
 
     create_credential() {
         var self = this
         return async function (call, callback) {
-            let { UC } = self
+            let { UseCases } = self
             let credential = call.request
 
             try {
-                await UC.System.create_credential(credential)
+                await UseCases.create_credential(credential)
                 let statusResponse = {
                     status: "ok"
                 }
@@ -29,10 +27,10 @@ module.exports = class Controller {
         var self = this
         return async function (call, callback) {
             let user = call.request.user
-            let { UC } = self
+            let { UseCases } = self
 
             try {
-                let token = await UC.System.generateToken(user)
+                let token = await UseCases.generateToken(user)
                 let tokenResponse = {
                     token: token,
                     status: "ok"
