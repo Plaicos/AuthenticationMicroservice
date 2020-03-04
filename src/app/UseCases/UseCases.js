@@ -85,6 +85,10 @@ module.exports = class SystemUseCases {
             let { entities, DAO } = this
 
             try {
+                if (config && !credential) {
+                    return reject("Unauthrized")
+                }
+
                 let Credential = new entities.Credential({ DAO })
                 await Credential.validate(config, true)
                 await Credential.validate(credential)
@@ -107,7 +111,7 @@ module.exports = class SystemUseCases {
                     if (config.scope.write && !credential.scope.write) {
                         return reject("Unauthorized Request")
                     }
-                    
+
                     //third party scope
                     if (config.scope.third_party) {
                         if (config.scope.third_party.read && !credential.scope.third_party.read) {
